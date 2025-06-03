@@ -2,7 +2,6 @@ import numpy as np
 import keras
 from keras.datasets import mnist
 import os
-from PIL import Image
 
 EPOCHS = 10
 BATCH_SIZE = 128
@@ -125,12 +124,13 @@ class VAE:
     
     def test(self, X: np.ndarray):
         for i in range(10):
-                    x = X[i]
-                    x_reconstructed, mu, logvar, z = self.forward(x)
-                    img_array = (x_reconstructed.reshape(28, 28) * 255).astype(np.uint8)
-                    Image.fromarray(img_array).save(f"reconstructed_{i}.png")
-                    orig_array = (x.reshape(28, 28) * 255).astype(np.uint8)
-                    Image.fromarray(orig_array).save(f"original_{i}.png")
+            x = X[i]
+            x_reconstructed, _, _, _ = self.forward(x)
+            import matplotlib.pyplot as plt
+            plt.imshow(x.reshape(28, 28), cmap='gray')
+            plt.show()
+            plt.imshow(x_reconstructed.reshape(28, 28), cmap='gray')
+            plt.show()
     
     def save_weights(self, filepath: str):
         np.savez(filepath,
@@ -164,11 +164,11 @@ if __name__ == "__main__":
     x_test = x_test / 255.0
     vae = VAE(784, 30, 10)
     
-    if os.path.exists("/home/amaury-delille/Documents/machine_learning/ml-dl/variational-auto-encoder/vae_weights.npz"):
-        vae.load_weights("/home/amaury-delille/Documents/machine_learning/ml-dl/variational-auto-encoder/vae_weights.npz")
+    if os.path.exists("/home/amaury-delille/Documents/machine_learning/ml-dl/vae/vae_weights.npz"):
+        vae.load_weights("/home/amaury-delille/Documents/machine_learning/ml-dl/vae/vae_weights.npz")
     else:
         vae.train(x_train, EPOCHS)
-        vae.save_weights("/home/amaury-delille/Documents/machine_learning/ml-dl/variational-auto-encoder/vae_weights.npz")
+        vae.save_weights("/home/amaury-delille/Documents/machine_learning/ml-dl/vae/vae_weights.npz")
     
     x_reconstructed, mu, logvar, z = vae.test(x_test)
     
