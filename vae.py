@@ -125,23 +125,23 @@ class VAE:
     
     def test(self, X: np.ndarray):
         for i in range(10):
-                    x = X[i]
-                    x_reconstructed, mu, logvar, z = self.forward(x)
-                    img_array = (x_reconstructed.reshape(28, 28) * 255).astype(np.uint8)
-                    Image.fromarray(img_array).save(f"reconstructed_{i}.png")
-                    orig_array = (x.reshape(28, 28) * 255).astype(np.uint8)
-                    Image.fromarray(orig_array).save(f"original_{i}.png")
+            x = X[i]
+            x_reconstructed, mu, logvar, z = self.forward(x)
+            img_array = (x_reconstructed.reshape(28, 28) * 255).astype(np.uint8)
+            Image.fromarray(img_array).save(f"reconstructed_{i}.png")
+            orig_array = (x.reshape(28, 28) * 255).astype(np.uint8)
+            Image.fromarray(orig_array).save(f"original_{i}.png")
     
     def save_weights(self, filepath: str):
         np.savez(filepath,
-                 encoder_W1=self.encoder.W1,
-                 encoder_W_mu=self.encoder.W_mu,
-                 encoder_W_logvar=self.encoder.W_logvar,
-                 encoder_b1=self.encoder.b1,
-                 encoder_b_mu=self.encoder.b_mu,
-                 encoder_b_logvar=self.encoder.b_logvar,
-                 decoder_W1=self.decoder.W1,
-                 decoder_b1=self.decoder.b1)
+         encoder_W1=self.encoder.W1,
+         encoder_W_mu=self.encoder.W_mu,
+         encoder_W_logvar=self.encoder.W_logvar,
+         encoder_b1=self.encoder.b1,
+         encoder_b_mu=self.encoder.b_mu,
+         encoder_b_logvar=self.encoder.b_logvar,
+         decoder_W1=self.decoder.W1,
+         decoder_b1=self.decoder.b1)
         print(f"Weights saved to {filepath}")
     
     def load_weights(self, filepath: str):
