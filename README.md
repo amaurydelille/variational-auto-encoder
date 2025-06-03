@@ -1,7 +1,2 @@
-# variational-auto-encoder
-Implementation of a VAE using NumPy only.
-
-Original | Reconstructed
-:-------------------------:|:-------------------------:
-![](original_0.png) | ![](reconstructed_0.png)
-
+# ml-dl
+All my thoughts, notes and projects regarding ML and DL.
